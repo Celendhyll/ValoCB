@@ -8,16 +8,14 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Optional;
 
+/**
+ * Service used to handle operations related to CurrencyConversion.
+ */
 @Service
 public class CurrencyConversionService implements ICurrencyConversionService {
 
     /**
-     * Get the factor of conversion from a currency to another
-     * We suppose our data is correct and contains the direct conversion, non-direct conversion is not handled here
-     * @param currencyFrom - the currency to convert from
-     * @param currencyTo - the currency to convert to
-     * @return the factor of conversion between the two currencies
-     * @throws RuntimeException - in case we don't find our currency conversion in our datas
+     * {@inheritDoc}
      */
     public BigDecimal getCurrencyFactor(String currencyFrom, String currencyTo) throws RuntimeException {
         // No need to do any calculus if from and to are the same currencies : return a factor one

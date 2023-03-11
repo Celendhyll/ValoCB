@@ -8,19 +8,19 @@ import java.io.*;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+/**
+ * Service that handles the generation of data from the CSV files.
+ */
 @Service
 public class DataGeneratorService implements IDataGeneratorService {
-
-    public static String DELIMITER = ",";
-
+    /**
+     * {@inheritDoc}
+     */
     public void generateData() {
         try {
             this.readForex();
             this.readPrices();
             this.readProduct();
-            // TODO : ci-dessous à enlever une fois le debug terminer
-            Datas datas = Datas.getInstance();
-            System.out.println("OUT");
         } catch (IOException ioException) {
             System.err.println("IOException: " + ioException.getMessage());
         } catch (RuntimeException runtimeException) {
@@ -28,26 +28,34 @@ public class DataGeneratorService implements IDataGeneratorService {
         }
     }
 
+    /**
+     * Parses the Forex.csv file to generate Data.
+     * @throws IOException - in case of errors related to the file
+     */
     private void readForex() throws IOException {
         Datas datas = Datas.getInstance();
         try (InputStream is = DataGeneratorService.class.getResourceAsStream("/Forex.csv");
              BufferedReader br = new BufferedReader(new InputStreamReader(Objects.requireNonNull(is)))) {
             br.lines().skip(1).forEach(
                     line -> {
-                        String[] values = line.split(DELIMITER);
+                        String[] values = line.split(CsvConvertorService.CSV_DELIMITER);
                         datas.getCurrencyConversions().add(new CurrencyConversionDTO(values[0], values[1], new BigDecimal(values[2])));
                     }
             );
         }
     }
 
+    /**
+     * Parses the Prices.csv file to generate Data.
+     * @throws IOException - in case of errors related to the file
+     */
     private void readPrices() throws IOException {
         Datas datas = Datas.getInstance();
         try (InputStream is = DataGeneratorService.class.getResourceAsStream("/Prices.csv");
              BufferedReader br = new BufferedReader(new InputStreamReader(Objects.requireNonNull(is)))) {
             br.lines().skip(1).forEach(
                     line -> {
-                        String[] values = line.split(DELIMITER);
+                        String[] values = line.split(CsvConvertorService.CSV_DELIMITER);
                         // Adding Underlying
                         UnderlyingDTO underlying = new UnderlyingDTO(values[2], values[3], Long.valueOf(values[4]));
                         datas.getUnderlyings().add(underlying);
@@ -73,6 +81,10 @@ public class DataGeneratorService implements IDataGeneratorService {
         }
     }
 
+    /**
+     * Parses the Product.csv file to generate Data.
+     * @throws IOException - in case of errors related to the file
+     */
     private void readProduct() throws IOException {
         Datas datas = Datas.getInstance();
         try (InputStream is = DataGeneratorService.class.getResourceAsStream("/Product.csv");
@@ -80,7 +92,7 @@ public class DataGeneratorService implements IDataGeneratorService {
             br.lines().skip(1).forEach(
                     line -> {
                         // Adding client
-                        String[] values = line.split(DELIMITER);
+                        String[] values = line.split(CsvConvertorService.CSV_DELIMITER);
                         String clientName = values[1];
                         ClientDTO client = datas.getClients().get(clientName);
                         if (client == null) {

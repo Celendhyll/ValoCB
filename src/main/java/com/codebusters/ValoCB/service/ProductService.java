@@ -7,12 +7,18 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 
+/**
+ * Service used to handle operations related to Product.
+ */
 @Service
 public class ProductService implements IProductService {
 
     @Autowired
     IUnderlyingService underlyingService;
 
+    /**
+     * {@inheritDoc}
+     */
     public BigDecimal getProductPrice(ProductDTO product, String currency) throws RuntimeException {
         try {
             BigDecimal totalPrice = BigDecimal.ZERO;

@@ -11,8 +11,16 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Service used to handle operations related to Portfolio.
+ */
 @Service
 public class PortfolioReportService implements IPortfolioReportService {
+
+    /**
+     * Name of the csv report to be generated.
+     */
+    public static String PORTFOLIO_CSV_NAME = "target/Reporting-portfolio.csv";
 
     @Autowired
     IProductService productService;
@@ -20,11 +28,13 @@ public class PortfolioReportService implements IPortfolioReportService {
     @Autowired
     ICsvConvertorService csvConvertorService;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void generateReport(String currency) {
         try {
             Datas datas = Datas.getInstance();
-            String csvName = "Reporting-portfolio.csv";
             List<String[]> dataLines = new ArrayList<>();
             String[] titleLines = {"PTF", "Price"};
             dataLines.add(titleLines);
@@ -33,12 +43,19 @@ public class PortfolioReportService implements IPortfolioReportService {
                 String[] ptfLine = {ptf.getName(), this.getPortfolioPrice(ptf, currency).toPlainString()};
                 dataLines.add(ptfLine);
             });
-            csvConvertorService.convertToCsv(csvName, dataLines);
+            csvConvertorService.convertToCsv(PORTFOLIO_CSV_NAME, dataLines);
         } catch (RuntimeException | IOException exception) {
             System.out.println("Error in the generation of the portfolio report: " + exception.getMessage());
         }
     }
 
+    /**
+     * Calculates the price of a portfolio according to a currency.
+     * @param portfolio - the wanted portfolio
+     * @param currency - the wanted currency
+     * @return the capital of the portfolio client in the wanted currency
+     * @throws RuntimeException - in case of an error with the calculus
+     */
     private BigDecimal getPortfolioPrice(PortfolioDTO portfolio, String currency) throws RuntimeException {
         try {
             BigDecimal totalPrice = BigDecimal.ZERO;

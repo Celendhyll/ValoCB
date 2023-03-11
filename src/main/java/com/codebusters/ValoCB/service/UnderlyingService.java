@@ -6,12 +6,18 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 
+/**
+ * Service used to handle operations related to Underlying.
+ */
 @Service
 public class UnderlyingService implements IUnderlyingService {
 
     @Autowired
     ICurrencyConversionService currencyConversionService;
 
+    /**
+     * {@inheritDoc}
+     */
     public BigDecimal getUnderlyingPrice(UnderlyingDTO underlying, String currency) throws RuntimeException {
         try {
             return BigDecimal.valueOf(underlying.getPrice()).multiply(

@@ -7,8 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+/**
+ * Runner for our app. Will call the services needed.
+ */
 @Component
 public class StartRunner implements CommandLineRunner {
+
+    /**
+     * Wanted currency for generation.
+     */
+    public static String WANTED_CURRENCY = "EUR";
+
     @Autowired
     IDataGeneratorService dataGeneratorService;
 
@@ -18,13 +27,14 @@ public class StartRunner implements CommandLineRunner {
     @Autowired
     IClientReportService clientReportService;
 
+    /**
+     * Run method. Will call data generation then report generations.
+     * Will be called when we launch the app.
+     * @param args - args
+     * @throws Exception - Exception
+     */
     @Override
     public void run(String... args) throws Exception {
-        String wantedCurrency = "EUR";
         dataGeneratorService.generateData();
-        // Testing in euros
-        portfolioReportService.generateReport(wantedCurrency);
-        clientReportService.generateReport(wantedCurrency);
-        System.exit(0);
     }
 }

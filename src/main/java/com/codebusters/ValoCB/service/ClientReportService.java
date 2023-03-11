@@ -12,8 +12,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Service used to handle operations related to Client.
+ */
 @Service
 public class ClientReportService implements IClientReportService {
+
+    /**
+     * Name of the csv report to be generated.
+     */
+    public static String CLIENT_CSV_NAME = "target/Reporting-client.csv";
 
     @Autowired
     IProductService productService;
@@ -21,11 +29,13 @@ public class ClientReportService implements IClientReportService {
     @Autowired
     ICsvConvertorService csvConvertorService;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void generateReport(String currency) {
         try {
             Datas datas = Datas.getInstance();
-            String csvName = "Reporting-client.csv";
             List<String[]> dataLines = new ArrayList<>();
             String[] titleLines = {"Client", "Capital"};
             dataLines.add(titleLines);
@@ -34,18 +44,25 @@ public class ClientReportService implements IClientReportService {
                 String[] clientLine = {client.getName(), this.getClientCapital(client, currency).toPlainString()};
                 dataLines.add(clientLine);
             });
-            csvConvertorService.convertToCsv(csvName, dataLines);
+            csvConvertorService.convertToCsv(CLIENT_CSV_NAME, dataLines);
         } catch (RuntimeException | IOException exception) {
             System.out.println("Error in the generation of the portfolio report: " + exception.getMessage());
         }
     }
 
+    /**
+     * Calculates the capital of a client according to a currency.
+     * @param client - the wanted client
+     * @param currency - the wanted currency
+     * @return the capital of the wanted client in the wanted currency
+     * @throws RuntimeException - in case of an error with the calculus
+     */
     private BigDecimal getClientCapital(ClientDTO client, String currency) throws RuntimeException {
         try {
             BigDecimal totalPrice = BigDecimal.ZERO;
             for (Map.Entry<ProductDTO, Long> productQuantity : client.getProductQuantityMap().entrySet()) {
-                totalPrice = totalPrice.add(productService.getProductPrice(productQuantity.getKey(), currency))
-                        .multiply(BigDecimal.valueOf(productQuantity.getValue()));
+                totalPrice = totalPrice.add(productService.getProductPrice(productQuantity.getKey(), currency)
+                        .multiply(BigDecimal.valueOf(productQuantity.getValue())));
             }
             return totalPrice.stripTrailingZeros();
         } catch (RuntimeException runtimeException) {

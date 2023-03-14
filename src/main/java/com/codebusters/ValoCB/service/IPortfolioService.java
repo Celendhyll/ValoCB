@@ -6,7 +6,6 @@ import java.math.BigDecimal;
 /**
  * Interface used to handle operations related to Portfolio.
  */
-@FunctionalInterface
 public interface IPortfolioService {
 
     /**

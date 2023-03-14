@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Service used to handle operations related to Client.
+ * Service used to handle operations related to Client report generation.
  */
 @Service
 public class ClientReportService implements IClientReportService {

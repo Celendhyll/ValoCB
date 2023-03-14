@@ -6,7 +6,6 @@ import java.util.List;
 /**
  * Interface used to handle operations related to CSV files.
  */
-@FunctionalInterface
 public interface ICsvConvertorService {
 
     /**

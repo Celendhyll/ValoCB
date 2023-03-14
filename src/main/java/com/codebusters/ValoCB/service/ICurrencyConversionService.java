@@ -5,7 +5,6 @@ import java.math.BigDecimal;
 /**
  * Interface used to handle operations related to CurrencyConversion.
  */
-@FunctionalInterface
 public interface ICurrencyConversionService {
     
     /**

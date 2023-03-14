@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.Map;
 
+/**
+ * Service used to handle operations related to Client.
+ */
 @Service
 public class ClientService implements IClientService {
 

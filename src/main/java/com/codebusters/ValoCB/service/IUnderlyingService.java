@@ -7,7 +7,6 @@ import java.math.BigDecimal;
 /**
  * Interface used to handle operations related to Underlying.
  */
-@FunctionalInterface
 public interface IUnderlyingService {
 
     /**

@@ -3,7 +3,6 @@ package com.codebusters.ValoCB.service;
 /**
  * Interface that handles the generation of data from the CSV files.
  */
-@FunctionalInterface
 public interface IDataGeneratorService {
 
     /**

@@ -3,7 +3,9 @@ package com.codebusters.ValoCB.service;
 import com.codebusters.ValoCB.dto.ClientDTO;
 import java.math.BigDecimal;
 
-@FunctionalInterface
+/**
+ * Interface used to handle operations related to Client.
+ */
 public interface IClientService {
 
     /**

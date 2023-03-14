@@ -7,7 +7,6 @@ import java.math.BigDecimal;
 /**
  * Interface used to handle operations related to Product.
  */
-@FunctionalInterface
 public interface IProductService {
 
     /**

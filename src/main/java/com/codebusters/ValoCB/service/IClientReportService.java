@@ -1,9 +1,8 @@
 package com.codebusters.ValoCB.service;
 
 /**
- * Interface used to handle operations related to Client.
+ * Interface used to handle operations related to Client generation report.
  */
-@FunctionalInterface
 public interface IClientReportService {
     
     /**

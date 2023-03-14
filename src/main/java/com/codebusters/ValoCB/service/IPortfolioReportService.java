@@ -3,7 +3,6 @@ package com.codebusters.ValoCB.service;
 /**
  * Interface used to handle operations related to Portfolio report generation.
  */
-@FunctionalInterface
 public interface IPortfolioReportService {
 
     /**

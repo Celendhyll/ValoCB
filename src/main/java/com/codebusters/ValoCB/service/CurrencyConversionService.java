@@ -1,7 +1,6 @@
 package com.codebusters.ValoCB.service;
 
 import com.codebusters.ValoCB.Datas;
-import com.codebusters.ValoCB.dto.CurrencyConversionDTO;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;

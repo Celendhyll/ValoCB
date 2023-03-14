@@ -1,13 +1,10 @@
 package com.codebusters.ValoCB.service;
 
 import com.codebusters.ValoCB.Datas;
-import com.codebusters.ValoCB.dto.PortfolioDTO;
-import com.codebusters.ValoCB.dto.ProductDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 

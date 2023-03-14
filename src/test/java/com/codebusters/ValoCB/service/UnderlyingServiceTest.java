@@ -24,6 +24,7 @@ class UnderlyingServiceTest {
     void getUnderlyingPrice() {
         UnderlyingDTO un = new UnderlyingDTO("un", "EUR", 47L);
         assert BigDecimal.valueOf(47L).equals(underlyingService.getUnderlyingPrice(un, "EUR"));
+        // Not really "necessary" here but allows to test for the conversion in a method where it is called
         assert BigDecimal.valueOf(94L).equals(underlyingService.getUnderlyingPrice(un, "USD"));
     }
 }

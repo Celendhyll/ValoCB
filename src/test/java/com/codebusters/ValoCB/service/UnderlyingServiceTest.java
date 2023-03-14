@@ -17,21 +17,13 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class UnderlyingServiceTest {
 
-    @BeforeEach
-    void setUp() {
-    }
-
-    @AfterEach
-    void tearDown() {
-    }
-
     @Autowired
     IUnderlyingService underlyingService;
 
     @Test
     void getUnderlyingPrice() {
         UnderlyingDTO un = new UnderlyingDTO("un", "EUR", 47L);
-        assert underlyingService.getUnderlyingPrice(un, "EUR").equals(BigDecimal.valueOf(47L));
-        assert underlyingService.getUnderlyingPrice(un, "USD").equals(BigDecimal.valueOf(94L));
+        assert BigDecimal.valueOf(47L).equals(underlyingService.getUnderlyingPrice(un, "EUR"));
+        assert BigDecimal.valueOf(94L).equals(underlyingService.getUnderlyingPrice(un, "USD"));
     }
 }

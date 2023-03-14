@@ -15,14 +15,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class DataGeneratorServiceTest {
 
-    @BeforeEach
-    void setUp() {
-    }
-
-    @AfterEach
-    void tearDown() {
-    }
-
     @Test
     void generateData() {
         // The method dataGeneratorService.generateData() is called on app running, we don't need to call it here

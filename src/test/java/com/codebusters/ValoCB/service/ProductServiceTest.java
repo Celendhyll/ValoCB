@@ -18,14 +18,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class ProductServiceTest {
 
-    @BeforeEach
-    void setUp() {
-    }
-
-    @AfterEach
-    void tearDown() {
-    }
-
     @Autowired
     IProductService productService;
 
@@ -35,6 +27,6 @@ class ProductServiceTest {
         ProductDTO product = new ProductDTO(productName);
         product.getUnderlyings().add(new UnderlyingDTO("uTest1", "EUR", 10L));
         product.getUnderlyings().add(new UnderlyingDTO("uTest2", "EUR", 45L));
-        assert productService.getProductPrice(product, "EUR").equals(BigDecimal.valueOf(55L));
+        assert BigDecimal.valueOf(55L).equals(productService.getProductPrice(product, "EUR"));
     }
 }

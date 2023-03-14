@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Service used to handle operations related to Portfolio.
+ * Service used to handle operations related to Portfolio report generation.
  */
 @Service
 public class PortfolioReportService implements IPortfolioReportService {
@@ -23,10 +23,10 @@ public class PortfolioReportService implements IPortfolioReportService {
     public static String PORTFOLIO_CSV_NAME = "target/Reporting-portfolio.csv";
 
     @Autowired
-    IProductService productService;
+    ICsvConvertorService csvConvertorService;
 
     @Autowired
-    ICsvConvertorService csvConvertorService;
+    IPortfolioService portfolioService;
 
     /**
      * {@inheritDoc}
@@ -40,33 +40,12 @@ public class PortfolioReportService implements IPortfolioReportService {
             dataLines.add(titleLines);
             // Our portfolios data is in a form of Map<ptfName, ptf>, here we only need our ptf, so we will iterate on map.values
             datas.getPortfolios().values().forEach(ptf -> {
-                String[] ptfLine = {ptf.getName(), this.getPortfolioPrice(ptf, currency).toPlainString()};
+                String[] ptfLine = {ptf.getName(), portfolioService.getPortfolioPrice(ptf, currency).toPlainString()};
                 dataLines.add(ptfLine);
             });
             csvConvertorService.convertToCsv(PORTFOLIO_CSV_NAME, dataLines);
         } catch (RuntimeException | IOException exception) {
             System.out.println("Error in the generation of the portfolio report: " + exception.getMessage());
-        }
-    }
-
-    /**
-     * Calculates the price of a portfolio according to a currency.
-     * @param portfolio - the wanted portfolio
-     * @param currency - the wanted currency
-     * @return the capital of the portfolio client in the wanted currency
-     * @throws RuntimeException - in case of an error with the calculus
-     */
-    private BigDecimal getPortfolioPrice(PortfolioDTO portfolio, String currency) throws RuntimeException {
-        try {
-            BigDecimal totalPrice = BigDecimal.ZERO;
-            for (ProductDTO product : portfolio.getProducts()) {
-                totalPrice = totalPrice.add(productService.getProductPrice(product, currency));
-            }
-            return totalPrice.stripTrailingZeros();
-        } catch (RuntimeException runtimeException) {
-            String msg = String.format("Error in calculating the price of the portfolio %1s: %2s", portfolio.getName(),
-                    runtimeException.getMessage());
-            throw new RuntimeException(msg);
         }
     }
 }

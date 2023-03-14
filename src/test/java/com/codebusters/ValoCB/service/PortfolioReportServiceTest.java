@@ -14,14 +14,6 @@ import java.io.File;
 @SpringBootTest
 class PortfolioReportServiceTest {
 
-    @BeforeEach
-    void setUp() {
-    }
-
-    @AfterEach
-    void tearDown() {
-    }
-
     @Autowired
     IPortfolioReportService portfolioReportService;
 

@@ -24,7 +24,7 @@ public class ClientReportService implements IClientReportService {
     public static String CLIENT_CSV_NAME = "target/Reporting-client.csv";
 
     @Autowired
-    IProductService productService;
+    IClientService clientService;
 
     @Autowired
     ICsvConvertorService csvConvertorService;
@@ -41,34 +41,12 @@ public class ClientReportService implements IClientReportService {
             dataLines.add(titleLines);
             // Our portfolios data is in a form of Map<ptfName, ptf>, here we only need our ptf, so we will iterate on map.values
             datas.getClients().values().forEach(client -> {
-                String[] clientLine = {client.getName(), this.getClientCapital(client, currency).toPlainString()};
+                String[] clientLine = {client.getName(), clientService.getClientCapital(client, currency).toPlainString()};
                 dataLines.add(clientLine);
             });
             csvConvertorService.convertToCsv(CLIENT_CSV_NAME, dataLines);
         } catch (RuntimeException | IOException exception) {
             System.out.println("Error in the generation of the portfolio report: " + exception.getMessage());
-        }
-    }
-
-    /**
-     * Calculates the capital of a client according to a currency.
-     * @param client - the wanted client
-     * @param currency - the wanted currency
-     * @return the capital of the wanted client in the wanted currency
-     * @throws RuntimeException - in case of an error with the calculus
-     */
-    private BigDecimal getClientCapital(ClientDTO client, String currency) throws RuntimeException {
-        try {
-            BigDecimal totalPrice = BigDecimal.ZERO;
-            for (Map.Entry<ProductDTO, Long> productQuantity : client.getProductQuantityMap().entrySet()) {
-                totalPrice = totalPrice.add(productService.getProductPrice(productQuantity.getKey(), currency)
-                        .multiply(BigDecimal.valueOf(productQuantity.getValue())));
-            }
-            return totalPrice.stripTrailingZeros();
-        } catch (RuntimeException runtimeException) {
-            String msg = String.format("Error in calculating the capital of the client %1s: %2s", client.getName(),
-                    runtimeException.getMessage());
-            throw new RuntimeException(msg);
         }
     }
 }

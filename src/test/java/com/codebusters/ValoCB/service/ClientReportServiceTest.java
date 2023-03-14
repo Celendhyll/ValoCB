@@ -16,14 +16,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class ClientReportServiceTest {
 
-    @BeforeEach
-    void setUp() {
-    }
-
-    @AfterEach
-    void tearDown() {
-    }
-
     @Autowired
     IClientReportService clientReportService;
 

@@ -16,21 +16,13 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class CurrencyConversionServiceTest {
 
-    @BeforeEach
-    void setUp() {
-    }
-
-    @AfterEach
-    void tearDown() {
-    }
-
     @Autowired
     ICurrencyConversionService currencyConversionService;
 
     @Test
     void getCurrencyFactor() {
-        assert currencyConversionService.getCurrencyFactor("EUR", "EUR").equals(BigDecimal.ONE);
-        assert currencyConversionService.getCurrencyFactor("EUR", "USD").equals(BigDecimal.valueOf(2L));
-        assert currencyConversionService.getCurrencyFactor("USD", "EUR").equals(BigDecimal.valueOf(0.5));
+        assert BigDecimal.ONE.equals(currencyConversionService.getCurrencyFactor("EUR", "EUR"));
+        assert BigDecimal.valueOf(2L).equals(currencyConversionService.getCurrencyFactor("EUR", "USD"));
+        assert BigDecimal.valueOf(0.5).equals(currencyConversionService.getCurrencyFactor("USD", "EUR"));
     }
 }

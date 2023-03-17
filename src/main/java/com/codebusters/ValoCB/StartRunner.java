@@ -13,19 +13,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class StartRunner implements CommandLineRunner {
 
-    /**
-     * Wanted currency for generation.
-     */
-    public static String WANTED_CURRENCY = "EUR";
-
     @Autowired
     IDataGeneratorService dataGeneratorService;
-
-    @Autowired
-    IPortfolioReportService portfolioReportService;
-
-    @Autowired
-    IClientReportService clientReportService;
 
     /**
      * Run method. Will call data generation then report generations.
